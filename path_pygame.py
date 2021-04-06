@@ -6,6 +6,7 @@ from bolt_on import *
 # first github capture - files downloaded and this comment is my first tracked comit
 # it's nice to be coding again.
 
+commit = True
 
 def draw_grid():
     for y in rect_list:
