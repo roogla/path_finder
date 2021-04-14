@@ -1,7 +1,12 @@
-import pygame
 from random import randint
 from grid import *
-from bolt_on import *
+from utility import * 
+import pygame
+import os
+
+x, y = (100, 100)
+os.environ['SDL_VIDEO_WINDOW_POS'] = f"{x},  {y}"
+
 
 # first github capture - files downloaded and this comment is my first tracked comit
 # it's nice to be coding again.
@@ -28,6 +33,7 @@ def change_list(x, y, color=None, fill=None):
 
 def square_detection(point_pos, color=None, fill=None):
     a, b = point_pos
+    # integer division keeps uniformity
     change_list(a // 20, b // 20, color, fill)
 
 
@@ -81,7 +87,8 @@ if __name__ == '__main__':
                 running = False
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 square_detection(pointer_pos, colors['red'])
-                point_holder.append([pointer_pos[0] // 20, pointer_pos[1] // 20])
+                point_holder.append([int(pointer_pos[0] // 20), int(pointer_pos[1] // 20)])
+
                 if switch[0]:
                     switch[1] = True
                 else:
@@ -97,6 +104,7 @@ if __name__ == '__main__':
                 point_holder.append(point_holder[0])
                 square_detection((point_holder[0][0] * 20, point_holder[0][1] * 20), colors['black'], 1)
                 point_holder[0] = find_nine(point_holder[0], rect_list, point_holder)
+                print(point_holder[0])
                 square_detection((point_holder[0][0] * 20, point_holder[0][1] * 20), colors['red'])
 
             for n in rect_list:
