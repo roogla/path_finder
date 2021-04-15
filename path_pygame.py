@@ -13,6 +13,7 @@ os.environ['SDL_VIDEO_WINDOW_POS'] = f"{x},  {y}"
 
 commit = True
 
+
 def draw_grid():
     for y in rect_list:
         pygame.draw.rect(y['screen'], y['color'], y['grid'], y['fill'])
@@ -101,18 +102,19 @@ if __name__ == '__main__':
                 point_holder = []
                 switch = [False for _ in range(3)]
             else:
+                for points in point_holder:
+                    square_detection((points[0] * 20, points[1] * 20), colors['green'])
                 point_holder.append(point_holder[0])
                 square_detection((point_holder[0][0] * 20, point_holder[0][1] * 20), colors['black'], 1)
                 point_holder[0] = find_nine(point_holder[0], rect_list, point_holder)
                 print(point_holder[0])
                 square_detection((point_holder[0][0] * 20, point_holder[0][1] * 20), colors['red'])
+                square_detection((point_holder[1][0] * 20, point_holder[1][1] * 20), colors['red'])
 
-            for n in rect_list:
-                for m in rect_list:
-                    if n['color'] == colors['red'] and m['color'] == colors['red']:
-                        pygame.draw.line(
-                            screen, (0, 0, 0), in_line(n['coord']), in_line(m['coord']), 2
-                        )
+        if len(point_holder) > 2:
+            pygame.draw.line(
+                screen, (0, 0, 0), in_line(point_holder[-1]), in_line(point_holder[1]), 2
+            )
 
         pygame.display.update()
         clock.tick(30)

@@ -1,8 +1,5 @@
 from math import sqrt
 import time
-from decimal import *
-import random
-
 
 class GridMatrix:
     def __init__(self, width, height):
@@ -38,51 +35,71 @@ def log_(logs, position_list, return_list):
         f.write(str(log) + "\n")
 
 
-def find_nine(coord, rectal_dict, position_list):
-    scores = []
-    print(position_list)
-    a = coord[0] - 1
-    b = coord[1] - 1
-    y = position_list[1][0] - 1
-    z = position_list[1][1] - 1
+def find_nine(current_pos, rectal_dict, position_list):
+
     current_list = []
     goal_list = []
+    scores = []
 
     def wall_check(wall_num):
-        if wall_num[1] is not 1:
-            wall_num[2] = 15
+        if wall_num['wall'] is not 1:
             return wall_num
         else:
+            wall_num['cost'] += 1000
             return wall_num
 
-    for i in range(0, 3):
-        for j in range(0, 3):
-            for box in rectal_dict:
-                if box['coord'] == [a + j, b + i]:
-                    current_list.append([box['grid'], box['wall'], 0])
-                if box['coord'] == [y + j, z + i]:
-                    goal_list.append([box['grid'], box['wall']])
+    def get_current_recs(recs_list, pos, dest_list):
+        a, b = (pos[0] - 1, pos[1] - 1)
 
-    checks = {"box_current": current_list[4],
-              "box_three": wall_check(current_list[3]),
-              "box_one": wall_check(current_list[1]),
-              "box_five": wall_check(current_list[5]),
-              "box_seven": wall_check(current_list[7])
+        for i in range(0, 3):
+            for j in range(0, 3):
+                for box in recs_list:
+                    if box['coord'] == [a + j, b + i]:
+                        dest_list.append(box)
+
+    def score(recs_obj1, recs_obj2):
+        y, z = (recs_obj1['grid'][0], recs_obj1['grid'][1])
+        n, m = (recs_obj2['grid'][0], recs_obj2['grid'][1])
+
+        if sqrt((n - y) ** 2 + (m - z) ** 2) < 22:
+            recs_obj1['cost'] -= 200
+
+        return [[recs_obj1['grid'][0] // 20, recs_obj1['grid'][1] // 20],
+                recs_obj1['cost'] + sqrt((n - y) ** 2 + (m - z) ** 2)
+                ]
+
+    get_current_recs(rectal_dict, current_pos, current_list)
+    get_current_recs(rectal_dict, position_list[1], goal_list)
+
+    for recs in current_list:
+        wall_check(recs)
+
+    checks = {"box_one": current_list[1],
+              "box_three": current_list[3],
+              "box_five": current_list[5],
+              "box_seven": current_list[7]
               }
-    carriage = []
-    check_counter = 0
-    for key in checks:
-        if checks[key][2] == 15:
-            check_counter += 1
-    print(checks)
-    print(check_counter)
-    if check_counter == 1:
-        for _ in checks:
-            if checks[_][2] == 15:
-                carriage.append(checks[_][0][0]//20)
-                carriage.append(checks[_][0][1]//20)
+    print(position_list)
+    for _ in checks:
+        for coords in position_list:
+            if checks[_]['coord'] == coords:
+                for obj in rectal_dict:
+                    if obj['coord'] == checks[_]['coord']:
+                        obj['cost'] += 300
 
-    print(carriage)
-    vertex_scores = {}
-    return carriage
+                    if obj['coord'] == goal_list[4]['coord']:
+                        goal_list[4]['cost'] -= 100
+
+        scores.append(score(checks[_], goal_list[4]))
+
+    winner = scores[0]
+    time.sleep(0.08)
+    for num in scores:
+        if num[1] <= winner[1]:
+            winner = num
+    print(scores)
+    print(f"{winner[0]}: {winner[1]}")
+    return winner[0]
+
+
     # return_list[scores.index(min(scores))]['coord']
