@@ -1,6 +1,7 @@
 from math import sqrt
 import time
 
+
 class GridMatrix:
     def __init__(self, width, height):
         self.width = width
@@ -26,17 +27,9 @@ class GridMatrix:
 
 def log_(logs, position_list, return_list):
     f = open("position_log.txt", "a")
-    f.write("_-_-_-_-\n Starting location: " + str(position_list[0]) + "\n")
-    f.write("Ending: " + str(position_list[1]) + "\n")
-    for _ in return_list:
-        f.write(str(_['coord']))
-    f.write("\n")
-    for log in logs:
-        f.write(str(log) + "\n")
 
 
 def find_nine(current_pos, rectal_dict, position_list):
-
     current_list = []
     goal_list = []
     scores = []
@@ -79,7 +72,7 @@ def find_nine(current_pos, rectal_dict, position_list):
               "box_five": current_list[5],
               "box_seven": current_list[7]
               }
-    print(position_list)
+
     for _ in checks:
         for coords in position_list:
             if checks[_]['coord'] == coords:
@@ -100,6 +93,3 @@ def find_nine(current_pos, rectal_dict, position_list):
     print(scores)
     print(f"{winner[0]}: {winner[1]}")
     return winner[0]
-
-
-    # return_list[scores.index(min(scores))]['coord']

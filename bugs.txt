@@ -10,6 +10,6 @@
     object current_list[x]. Where x represents a grib object that
     DNE along the edge of the search path.
 
-2.)
+2.) --- fixed
     # current_pos object will bounce off target instead of choosing
     # target pos as cheapest option.
