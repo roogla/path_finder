@@ -1,0 +1,15 @@
+1.)
+    # Traceback (most recent call last):
+    #  File "C:\Users\glass\Documents\aoc\path_finder\path_pygame.py", line 106, in <module>
+    #    point_holder[0] = find_nine(point_holder[0], rect_list, point_holder)
+    #  File "C:\Users\glass\Documents\aoc\path_finder\grid.py", line 80, in find_nine
+    #    "box_seven": current_list[7]
+    # IndexError: list index out of range
+
+    checks() definition -> "box_x": dict key is hard coded to grid
+    object current_list[x]. Where x represents a grib object that
+    DNE along the edge of the search path.
+
+2.) --- fixed
+    # current_pos object will bounce off target instead of choosing
+    # target pos as cheapest option.
