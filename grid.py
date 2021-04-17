@@ -4,11 +4,19 @@ from math import sqrt
 import time
 
 
+def log_(log):
+    f = open("position_log.txt", "a")
+    f.write(log)
+    f.close()
+
+
 class GridMatrix:
     def __init__(self, width, height):
         self.width = width
         self.height = height
         self.rects = []
+        self.current = {}
+        self.goal = {}
 
     def create_rects(self):
         dim_x = self.width // 20
@@ -25,10 +33,6 @@ class GridMatrix:
                     'cost': 0
                 })
         return self.rects
-
-
-def log_(logs, position_list, return_list):
-    f = open("position_log.txt", "a")
 
 
 def find_nine(current_pos, rectal_dict, position_list):
@@ -95,7 +99,10 @@ def find_nine(current_pos, rectal_dict, position_list):
         if num[1] <= winner[1]:
             winner = num
 
-    print(scores)
-    print("--")
-    print(f"{winner[0]}: {winner[1]}")
+    log_(f"---- step ----\n"
+         f'Scores: {"".join([str(i) for i in scores])}\n'
+         f"Current: {position_list[0]}\n"
+         f"Goal: {position_list[1]}\n"
+         f"Win: {winner[0]}\n"
+         f"Win Score: {winner[1]}\n")
     return winner[0]

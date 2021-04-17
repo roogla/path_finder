@@ -53,6 +53,7 @@ def scramble(scram_list):
                 y['wall'] = 1
 
 
+
 # set global declarations and init variables
 
 pygame.init()
@@ -94,10 +95,13 @@ if __name__ == '__main__':
 
         if switch[0] and switch[1]:
             if point_holder[0] == point_holder[1]:
+                pygame.display.update()
+                '''
                 scrub(rect_list)
                 scramble(rect_list)
                 point_holder = []
                 switch = [False for _ in range(3)]
+                '''
             else:
                 for points in point_holder:
                     square_detection((points[0] * 20, points[1] * 20), colors['green'])
