@@ -1,4 +1,6 @@
 from math import sqrt
+# from path_pygame import scrub
+# from path_pygame import scramble
 import time
 
 
@@ -31,14 +33,19 @@ def log_(logs, position_list, return_list):
 
 def find_nine(current_pos, rectal_dict, position_list):
     current_list = []
-    goal_list = []
+    goal = {}
     scores = []
 
+    for box in rectal_dict:
+        if box['coord'] == position_list[1]:
+            goal = box
+
     def wall_check(wall_num):
-        if wall_num['wall'] is not 1:
+        if wall_num['wall'] != 1:
+            wall_num['cost'] = -1
             return wall_num
         else:
-            wall_num['cost'] += 1000
+            wall_num['cost'] = 1000
             return wall_num
 
     def get_current_recs(recs_list, pos, dest_list):
@@ -54,42 +61,41 @@ def find_nine(current_pos, rectal_dict, position_list):
         y, z = (recs_obj1['grid'][0], recs_obj1['grid'][1])
         n, m = (recs_obj2['grid'][0], recs_obj2['grid'][1])
 
-        if sqrt((n - y) ** 2 + (m - z) ** 2) < 22:
-            recs_obj1['cost'] -= 200
+        if sqrt((n - y) ** 2 + (m - z) ** 2) <= 20:
+            recs_obj1['cost'] = -1
 
         return [[recs_obj1['grid'][0] // 20, recs_obj1['grid'][1] // 20],
-                recs_obj1['cost'] + sqrt((n - y) ** 2 + (m - z) ** 2)
+                recs_obj1['cost'] + (sqrt((n - y) ** 2 + (m - z) ** 2)/100)
                 ]
 
     get_current_recs(rectal_dict, current_pos, current_list)
-    get_current_recs(rectal_dict, position_list[1], goal_list)
-
-    for recs in current_list:
-        wall_check(recs)
 
     checks = {"box_one": current_list[1],
               "box_three": current_list[3],
               "box_five": current_list[5],
-              "box_seven": current_list[7]
+              "box_seven": current_list[-2]
               }
+
+    for recs in current_list:
+        if recs:
+            wall_check(recs)
 
     for _ in checks:
         for coords in position_list:
             if checks[_]['coord'] == coords:
                 for obj in rectal_dict:
                     if obj['coord'] == checks[_]['coord']:
-                        obj['cost'] += 300
+                        obj['cost'] += 0.1
 
-                    if obj['coord'] == goal_list[4]['coord']:
-                        goal_list[4]['cost'] -= 100
-
-        scores.append(score(checks[_], goal_list[4]))
+        scores.append(score(checks[_], goal))
 
     winner = scores[0]
     time.sleep(0.08)
     for num in scores:
         if num[1] <= winner[1]:
             winner = num
+
     print(scores)
+    print("--")
     print(f"{winner[0]}: {winner[1]}")
     return winner[0]
