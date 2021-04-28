@@ -20,7 +20,7 @@ B2.) --- fixed
     # DNE along the edge of the search path.
 
     >>> for checks dict in grid.py updated key "box_seven" to grab second to last
-        list object from current_list instead of object hardcoding position.
+        list object from current_list instead of object hard-coding position.
 
 B1.) --- fixed
     # current_pos object will bounce off target instead of choosing

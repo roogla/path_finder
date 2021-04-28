@@ -28,7 +28,7 @@ class GridMatrix:
                     'grid': [0 + (n * 20), 0 + (m * 20), 20, 20],
                     'screen': None,
                     'color': None,
-                    'fill': 1,
+                    'fill': 0.2,
                     'wall': 0,
                     'cost': 0
                 })
@@ -40,9 +40,9 @@ def find_nine(current_pos, rectal_dict, position_list):
     goal = {}
     scores = []
 
-    for box in rectal_dict:
-        if box['coord'] == position_list[1]:
-            goal = box
+    for rect in rectal_dict:
+        if rect['coord'] == position_list[1]:
+            goal = rect
 
     def wall_check(wall_num):
         if wall_num['wall'] != 1:
@@ -55,9 +55,9 @@ def find_nine(current_pos, rectal_dict, position_list):
     def get_current_recs(recs_list, pos, dest_list):
         a, b = (pos[0] - 1, pos[1] - 1)
 
-        for i in range(0, 3):
-            for j in range(0, 3):
-                for box in recs_list:
+        for box in recs_list:
+            for i in range(0, 3):
+                for j in range(0, 3):
                     if box['coord'] == [a + j, b + i]:
                         dest_list.append(box)
 
