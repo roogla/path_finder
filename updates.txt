@@ -1,3 +1,8 @@
+U2.)
+    # issue in path.py
+    # function square_detection calls function change_list
+    # all functionality can be moved to one or the other
+
 U1.)
     # decision scoring improvements
     # logic currently decides based on lowest score index
