@@ -1,9 +1,5 @@
-U2.)
-    # issue in path.py
-    # function square_detection calls function change_list
-    # all functionality can be moved to one or the other
 
-U1.)
+U1.) -- updated
     # decision scoring improvements
     # logic currently decides based on lowest score index
     # score is calculated as:
@@ -11,6 +7,20 @@ U1.)
     # if [distance_to_goal} < 22 pixels set obj['cost'] = -1
     # *see B2*
     # want to score adjacent rects on creation of wall
+B3.U1) - managed to implement cost decision addition
+       - but have managed to create new calculation bugs
+
+B4)
+    # certain rects are created as walls
+    # but assigned in correct fill
+    # fill 1 creates border
+    # fill 0 fills entirely
+
+/////////////////////////////////////      COMPLETED      //////////////////////////////////////////////////////////////
+U2.) -- fixed
+    # issue in path.py
+    # function square_detection calls function change_list
+    # all functionality can be moved to one or the other
 
 B2.) --- fixed
     # Traceback (most recent call last):

@@ -45,7 +45,7 @@ def rect_scrub(new_list):
 def rect_scramble(scram_list):
     rand = randint(len(scram_list) // 6, len(scram_list) // 4)
     for x in range(rand):
-        a, b = (randint(0, 29), randint(0, 29))
+        a, b = (randint(0, 37), randint(0, 37))
         for _ in scram_list:
             if _.get('coord') == [a, b]:
                 _.update(fill=0, wall=1)
@@ -60,7 +60,7 @@ colors = {
     'red2': [235, 64, 52],
     'green': [134, 168, 109]
 }
-start_grid = GridMatrix(600, 600)
+start_grid = GridMatrix(760, 760)
 pygame.display.set_caption("A* path finder")
 screen = pygame.display.set_mode([start_grid.width, start_grid.height])
 rect_list = rect_scrub(start_grid.create_rects())

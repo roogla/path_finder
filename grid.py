@@ -85,9 +85,16 @@ def find_nine(current_pos, rectal_dict, position_list):
             wall_check(recs)
 
     for _ in checks:
+        a, b = checks[_]['coord']
+        check_position = [(0, -1), (-1, 0), (0, 1), (1, 0)]
         for coords in position_list:
             if checks[_]['coord'] == coords:
                 for obj in rectal_dict:
+                    for coord in check_position:
+                        if obj['coord'] == [a + coord[0], b + coord[0]]:
+                            if obj.get('wall') == 1:
+                                increase = checks[_].get('cost') + 1
+                                checks[_].update(cost=increase)
                     if obj['coord'] == checks[_]['coord']:
                         obj['cost'] += 0.1
 
