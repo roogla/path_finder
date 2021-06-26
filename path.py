@@ -4,6 +4,8 @@ from utility import *
 import pygame
 import os
 
+# chekcing my commits and updates
+
 n, m = (100, 100)
 os.environ['SDL_VIDEO_WINDOW_POS'] = f"{n},  {m}"
 
